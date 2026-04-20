@@ -29,7 +29,7 @@ Diese Datei dient der **Konsistenz** über alle Vorlesungen hinweg: Welche **Pyt
 | V13 | Rechnerarchitektur (vereinfacht) | `matplotlib.pyplot.bar()`, `plt.title()`, `plt.xlabel()`, `plt.ylabel()`, `plt.show()` |
 | V14 | Betriebssysteme (vereinfacht) | `os.listdir()`, `os.path.isfile()`, `os.path.isdir()`, `os.path.getsize()`, `os.path.join()` |
 | V15 | Netzwerk-Grundlagen (vereinfacht) | `def`, `return` (Funktionen), `.split()`, `.startswith()`, `.isdigit()` |
-| V16 | APIs und JSON | `requests.get()`, `.json()`, Dictionary-Zugriff `daten["key"]`, f-String URL-Bau |
+| V16 | Netzwerk Teil 2: Pandas & REST-Konzepte | `import pandas as pd`, `pd.read_csv`, `pd.read_json`, `pd.DataFrame`, `df.head/shape/describe/dtypes`, `df[col]`, Boolean-Masken (`&`,`|`,`~`), `df.groupby(...)[...].mean/sum/count`, `series.idxmax`, `series.plot`, HTTP-Statuscodes (200/404/500), REST-Endpunkte (konzeptionell), `requests.get().json()` (nur als Muster) |
 | V17 | Kryptografie: Caesar-Chiffre | `ord()`, `chr()`, `str.isalpha()`, String-Iteration `for buchstabe in text:` |
 | V18 | Passwörter und Hashes | `hashlib.md5()`, `.encode()`, `.hexdigest()`, `.isupper()`, `.islower()`, `.isdigit()`, `.isalnum()` |
 | V19 | Datenbanken – Teil 1 (vereinfacht) | `sqlite3.connect()`, `.cursor()`, `.execute()`, `.fetchall()`, `.commit()`, `.close()`, SQL: CREATE TABLE, INSERT, SELECT, UPDATE, DELETE, WHERE |
@@ -2338,24 +2338,35 @@ Diese Datei dient der **Konsistenz** über alle Vorlesungen hinweg: Welche **Pyt
 
 ---
 
-## V16 – APIs und JSON
+## V16 – Netzwerk Teil 2: Pandas-Basics & REST-Konzepte
 
 ### Neu eingeführt
 
-#### requests-Modul
-- **`import requests`**
-- **`requests.get(url)`** — HTTP-GET-Anfrage senden
-- **`antwort.json()`** — JSON-Antwort als Dictionary einlesen
+#### pandas-Modul
+- **`import pandas as pd`** — Standard-Alias.
+- **`pd.read_csv(pfad)`** — CSV einlesen, liefert DataFrame.
+- **`pd.read_json(pfad)`** — JSON direkt einlesen (flache Strukturen).
+- **`pd.DataFrame(liste_von_dicts)`** — DataFrame aus Python-Struktur bauen.
+- **`df.head(n=5)`**, **`df.shape`**, **`df.dtypes`**, **`df.describe()`**, **`df.columns`** — Inspektion.
+- **`df["spalte"]`** — Spaltenzugriff (liefert Series).
+- **`df[["s1","s2"]]`** — mehrere Spalten als Sub-DataFrame.
+- **`df[maske]`** — Filtern mit Boolean-Maske.
+- **`&`**, **`|`**, **`~`** — Bool'sche Verknüpfung von Masken (immer klammern).
+- **`df.groupby("spalte")["ziel"].mean()/sum()/count()`** — Split-Apply-Combine.
+- **`series.idxmax()`**, **`series.max()`**, **`series.sort_values(ascending=False)`**.
+- **`df["spalte"].value_counts()`** — Häufigkeiten pro Wert.
+- **`df["spalte"].plot()`**, **`series.plot(kind="bar")`** — schneller Plot über Matplotlib.
 
-#### Dictionary-Zugriff (Vertiefung)
-- **`daten["key"]`** — Wert aus Dictionary lesen
-- **`daten["key1"]["key2"]`** — Verschachtelt zugreifen
-- **`:,`** in f-Strings — Tausender-Trennzeichen
+#### REST-/HTTP-Konzepte (nur konzeptionell, keine Live-Calls)
+- `requests.get(url).json()` als Muster
+- HTTP-Statuscodes: 200 OK, 404 Not Found, 500 Server-Fehler
+- REST-Endpunkte, HTTP-Methoden GET/POST/PUT/DELETE
 
 ### Notizen
-- Open-Meteo API (Wetter, kostenlos, kein API-Key)
-- REST Countries API
-- HTTP GET vs POST nur konzeptionell
+- Pandas ersetzt manuelle CSV-Parser-Schleifen durch Einzeiler.
+- DataFrame = beschriftete Tabelle, Series = einzelne Spalte mit Index.
+- `idxmax()` auf einer groupby-Aggregation ist das Standard-Werkzeug für „Welche Gruppe ist die größte?".
+- `requests` wird im Kurs **nicht live** aufgerufen (Offline-Reproduzierbarkeit); die Pandas-Übungen arbeiten mit mitgelieferten CSV/JSON/XML-Testdaten.
 
 ---
 
